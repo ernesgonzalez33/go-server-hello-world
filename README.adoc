@@ -1,3 +1,14 @@
 = HTTPS and HTTP Go application
 
 Hello World application for testing https and http
+
+== Usage
+
+Execute the following command to start the application:
+
+[source,bash]
+----
+$ go run server.go
+----
+
+Then test a curl to port 8000 if you want to go through http and port 9000 if you want to go trhough https.
