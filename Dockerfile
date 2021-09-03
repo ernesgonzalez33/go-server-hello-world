@@ -1,17 +1,19 @@
-FROM golang:1.16
+# syntax=docker/dockerfile:1
+FROM golang:1.16-alpine
 
-# Set the Current Working Directory inside the container
-WORKDIR $GOPATH/src/github.com/ernesgonzalez33/httpsserver
+WORKDIR /app
 
-# Copy everything from the current directory to the PWD(Present Working Directory) inside the container
-COPY . .
+COPY go.mod ./
 
-# Download all the dependencies
-#RUN go get -d -v ./...
+RUN go mod download
 
-# This container exposes ports 8000 and 9000 to the outside world
+COPY *.go ./
+COPY localhost.crt ./
+COPY localhost.key ./
+
+RUN go build -o /server
+
 EXPOSE 8000
 EXPOSE 9000
 
-# Run the executable
-CMD ["go", "run", "server.go"]
+CMD [ "/server" ]
